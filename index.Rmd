@@ -6,7 +6,9 @@ date: "2024-11-08"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+
+# remove any warning messages from the code!!! - PROFESSIONALISM MARKS (warning = FALSE)
 
 library(tidyverse)
 library(here)
@@ -27,6 +29,7 @@ https://github.com/izziecomber/Sheffield_weather_data.git
 
 ## Import the data 
 ```{r import}
+
 
 loc = "https://www.metoffice.gov.uk/pub/data/weather/uk/climate/stationdata/sheffielddata.txt"
 
