@@ -67,6 +67,8 @@ colnames(df) <- cols
 df$max_t <- as.numeric(df$max_t)
 
 # ggplot, change transparency of lines (can show you the density)
+# ensure you label the axis with a detailed description of the measure and include the unit of measurement
+# include title and modify the range of the axis 
 # canvas 
 p <- ggplot(df, aes(x = month, y = max_t, group = year, colour = year))
 # ink - added line showing this year's temperature data 
