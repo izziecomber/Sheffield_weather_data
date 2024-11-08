@@ -10,8 +10,14 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 
 # remove any warning messages from the code!!! - PROFESSIONALISM MARKS (warning = FALSE)
 
+# make sure to include sanity checks - counting missing values etc 
+
 library(tidyverse)
 library(here)
+library(ggplot2)
+library(transformr)
+library(gganimate)
+
 
 ```
 
@@ -88,6 +94,44 @@ p <- ggplot(df, aes(x = month, y = max_t, group = year, colour = year))
 p + geom_line(alpha = 0.1) + 
   geom_line(data = df %>% filter(year == 2024), colour = "red", linewidth = 2)
 
+
+
+```
+## Animated plot 
+
+We are going to use gganimate to create an animated plot. Animation is nice but think carefully about whether it is distracting or not. Animation needs to be relevant/in service of the data. 
+
+```{r animated}
+
+# this section may not work because need to download package 
+
+# go to gganimate and download 
+
+library(gganimate)
+
+# calculate average temp of each year
+# pipe function (%>%) is only used for data frames 
+df2 <- df %>%
+  group_by(year) %>%
+  summarise(avg_t = mean(max_t))
+
+# create animated plot 
+# need 3rd aes for animated plots (frame)
+p2 <- ggplot(df2, aes(x = year, y = avg_t), frame = year)
+
+# cumulative keeps it on the screen, "FALSE" would just have the points sort of jumping around the screen
+
+anim <- p2 + 
+  geom_point() + 
+  transition_manual(year, cumulative = TRUE) +
+  ggtitle("The year is: {frame+1882}")
+# {frame+1882} adds 1882 to the frame number - allows you to add the correct year to the frame of the animation 
+# run the show the animation 
+anim 
+
+# can change the speed, phase of the points etc - will change how impactful the plot is
+
+# export as gif, then save the plot to be embedded into github pages 
 
 
 ```
