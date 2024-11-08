@@ -18,9 +18,62 @@ Friday 8th November 2024. Class demo live follow along coding. Sheffield weather
 
 Data from this link: https://www.metoffice.gov.uk/pub/data/weather/uk/climate/stationdata/sheffielddata.txt
 
+The URL for these pages is https://izziecomber.github.io/Sheffield_weather_data/
+The repo for these pages is https://github.com/izziecomber/Sheffield_weather_data.git
+
 
 ## Import the data 
+```{r import}
+
+loc = "https://www.metoffice.gov.uk/pub/data/weather/uk/climate/stationdata/sheffielddata.txt"
+
+# split values by "tabs" with \t (white space) and skip the first 7 rows (description of data)
+# this approach doesn't work 
+
+#df <- read.csv(data_loc, sep = "\t", skip = 7)
+
+# will not import as text and clean
+
+dat <- readLines(loc)
+
+# change the word "provisional" to nothing, replace every instance
+dat <- gsub("Provisional", "", dat)
+dat <- gsub("\\*", "", dat)
+dat <- gsub("\\#", "", dat)
+
+# save new file
+writeLines(dat, "cleaned.text")
+
+# import data - lost the column names 
+df <- read.table("cleaned.text", skip = 7, fill = TRUE)
+
+
+```
+
 
 ## Wrangle the data 
+```{r}
+
+cols <- c("year", "month", "max_t", "min_t", "af", "rain", "sun")
+
+colnames(df) <- cols
+
+```
 
 ## visualise the data 
+```{r}
+
+# need max temp to be a number, use as.numeric
+df$max_t <- as.numeric(df$max_t)
+
+# ggplot, change transparency of lines (can show you the density)
+# canvas 
+p <- ggplot(df, aes(x = month, y = max_t, group = year, colour = year))
+# ink - added line showing this year's temperature data 
+p + geom_line(alpha = 0.1) + 
+  geom_line(data = df %>% filter(year == 2024), colour = "red", linewidth = 2)
+
+
+
+```
+
