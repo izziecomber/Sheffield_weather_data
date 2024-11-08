@@ -18,8 +18,11 @@ Friday 8th November 2024. Class demo live follow along coding. Sheffield weather
 
 Data from this link: https://www.metoffice.gov.uk/pub/data/weather/uk/climate/stationdata/sheffielddata.txt
 
-The URL for these pages is https://izziecomber.github.io/Sheffield_weather_data/
-The repo for these pages is https://github.com/izziecomber/Sheffield_weather_data.git
+The URL for these pages is: 
+https://izziecomber.github.io/Sheffield_weather_data/
+
+The repo for these pages is:
+https://github.com/izziecomber/Sheffield_weather_data.git
 
 
 ## Import the data 
@@ -37,14 +40,17 @@ loc = "https://www.metoffice.gov.uk/pub/data/weather/uk/climate/stationdata/shef
 dat <- readLines(loc)
 
 # change the word "provisional" to nothing, replace every instance
+
 dat <- gsub("Provisional", "", dat)
 dat <- gsub("\\*", "", dat)
 dat <- gsub("\\#", "", dat)
 
 # save new file
+
 writeLines(dat, "cleaned.text")
 
 # import data - lost the column names 
+
 df <- read.table("cleaned.text", skip = 7, fill = TRUE)
 
 
@@ -64,14 +70,18 @@ colnames(df) <- cols
 ```{r}
 
 # need max temp to be a number, use as.numeric
+
 df$max_t <- as.numeric(df$max_t)
 
 # ggplot, change transparency of lines (can show you the density)
 # ensure you label the axis with a detailed description of the measure and include the unit of measurement
 # include title and modify the range of the axis 
+
 # canvas 
 p <- ggplot(df, aes(x = month, y = max_t, group = year, colour = year))
+
 # ink - added line showing this year's temperature data 
+# add custom legend for the line of the current year (i.e., "2024 data shown in read")
 p + geom_line(alpha = 0.1) + 
   geom_line(data = df %>% filter(year == 2024), colour = "red", linewidth = 2)
 

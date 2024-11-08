@@ -359,8 +359,8 @@ display: none;
 <p>Friday 8th November 2024. Class demo live follow along coding.
 Sheffield weather data.</p>
 <p>Data from this link: <a href="https://www.metoffice.gov.uk/pub/data/weather/uk/climate/stationdata/sheffielddata.txt" class="uri">https://www.metoffice.gov.uk/pub/data/weather/uk/climate/stationdata/sheffielddata.txt</a></p>
-<p>The URL for these pages is <a href="https://izziecomber.github.io/Sheffield_weather_data/" class="uri">https://izziecomber.github.io/Sheffield_weather_data/</a>
-The repo for these pages is <a href="https://github.com/izziecomber/Sheffield_weather_data.git" class="uri">https://github.com/izziecomber/Sheffield_weather_data.git</a></p>
+<p>The URL for these pages is: <a href="https://izziecomber.github.io/Sheffield_weather_data/" class="uri">https://izziecomber.github.io/Sheffield_weather_data/</a></p>
+<p>The repo for these pages is: <a href="https://github.com/izziecomber/Sheffield_weather_data.git" class="uri">https://github.com/izziecomber/Sheffield_weather_data.git</a></p>
 </div>
 <div id="import-the-data" class="section level2">
 <h2>Import the data</h2>
@@ -377,14 +377,17 @@ dat &lt;- readLines(loc)</code></pre>
 <pre><code>## Warning in readLines(loc): incomplete final line found on
 ## &#39;https://www.metoffice.gov.uk/pub/data/weather/uk/climate/stationdata/sheffielddata.txt&#39;</code></pre>
 <pre class="r"><code># change the word &quot;provisional&quot; to nothing, replace every instance
+
 dat &lt;- gsub(&quot;Provisional&quot;, &quot;&quot;, dat)
 dat &lt;- gsub(&quot;\\*&quot;, &quot;&quot;, dat)
 dat &lt;- gsub(&quot;\\#&quot;, &quot;&quot;, dat)
 
 # save new file
+
 writeLines(dat, &quot;cleaned.text&quot;)
 
 # import data - lost the column names 
+
 df &lt;- read.table(&quot;cleaned.text&quot;, skip = 7, fill = TRUE)</code></pre>
 </div>
 <div id="wrangle-the-data" class="section level2">
@@ -396,14 +399,18 @@ colnames(df) &lt;- cols</code></pre>
 <div id="visualise-the-data" class="section level2">
 <h2>visualise the data</h2>
 <pre class="r"><code># need max temp to be a number, use as.numeric
+
 df$max_t &lt;- as.numeric(df$max_t)</code></pre>
 <pre><code>## Warning: NAs introduced by coercion</code></pre>
 <pre class="r"><code># ggplot, change transparency of lines (can show you the density)
 # ensure you label the axis with a detailed description of the measure and include the unit of measurement
 # include title and modify the range of the axis 
+
 # canvas 
 p &lt;- ggplot(df, aes(x = month, y = max_t, group = year, colour = year))
+
 # ink - added line showing this year&#39;s temperature data 
+# add custom legend for the line of the current year (i.e., &quot;2024 data shown in read&quot;)
 p + geom_line(alpha = 0.1) + 
   geom_line(data = df %&gt;% filter(year == 2024), colour = &quot;red&quot;, linewidth = 2)</code></pre>
 <pre><code>## Warning: Removed 24 rows containing missing values or values outside the scale range
