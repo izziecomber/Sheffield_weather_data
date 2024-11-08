@@ -1,0 +1,26 @@
+---
+
+title: "index"
+output: html_document
+date: "2024-11-08"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(here)
+
+```
+
+## Project description
+Friday 8th November 2024. Class demo live follow along coding. Sheffield weather data.
+
+Data from this link: https://www.metoffice.gov.uk/pub/data/weather/uk/climate/stationdata/sheffielddata.txt
+
+
+## Import the data 
+
+## Wrangle the data 
+
+## visualise the data 
